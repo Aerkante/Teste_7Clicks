@@ -34,9 +34,8 @@
 
         if(verifica_cad_duplicatas($email))
         {
-            //Injeção de dados
-            $sql_new_cad = "INSERT INTO `cadastros` (`email`, `senha`, `nome`, `cpf`, `cep`, `rua`, `numero`, `bairro`, `celular`, `complemento`) 
-            VALUES ('$email', '$senha', '$nome', '$cpf', '$cep', '$rua', '$numero', '$bairro', '$celular', '$complemento')";
+            $sql_new_cad = "INSERT INTO `cadastros` (`email`, `senha`, `nome`, `cpf`, `cidade`, `cep`, `rua`, `numero`, `bairro`, `celular`, `complemento`) 
+            VALUES ('$email', '$senha', '$nome', '$cpf', '$cidade', '$cep', '$rua', '$numero', '$bairro', '$celular', '$complemento')";
             if (mysqli_query($conn, $sql_new_cad))
             {
                 echo"<script language='javascript' type='text/javascript'>
@@ -53,8 +52,7 @@
         else
         {
             echo"<script language='javascript' type='text/javascript'>
-                alert('Email duplicado! Por favor, insira outro');window.location
-                .href='../pages/Cadastro.php';</script>";
+                alert('Email duplicado! Por favor, insira outro');window.history.back();</script>";
         }
     }
     else

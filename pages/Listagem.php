@@ -4,12 +4,48 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel='stylesheet' type='text/css' href='../style/bootstrap.css'>
+    <script type="text/javascript" src="../script/Confirmacao.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" 
+        integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link href="../style/style.css" rel="stylesheet">
     <title>Cadastro</title>
+
+    <?php
+    session_start();
+    if((!isset ($_SESSION['email']) == true) or (!isset ($_SESSION['senha']) == true))
+    {
+        unset($_SESSION['email']);
+        unset($_SESSION['senha']);
+        echo"<script language='javascript' type='text/javascript'>
+        alert('Você não está logado!');window.location.href='../index.html';</script>";
+    }
+    ?>
+
 </head>
 <body>
-    <div class="table-responsive">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="navbar-collapse">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+                <li class="nav-item active">
+                    <a class="nav-link active" href="Listagem.php">Listagem</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Cadastro.php">Cadastro</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../functions/Logout.php">Sair</a>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="table-responsive-sm">
         <table class="table">
+            <thead class="thead">
             <?php
                 include_once '../connection/conexao.php';
                 $sql_referencia = "SELECT * FROM cadastros";
@@ -26,51 +62,55 @@
                 $incio = ($quantidade_pg*$pagina)-$quantidade_pg;
                 
 
-                $sql = "SELECT * FROM cadastros ";
+                $sql = "SELECT * FROM cadastros limit $incio, $quantidade_pg";
                 $result = mysqli_query($conn, $sql);
                 $total_cad = mysqli_num_rows($result);
 
             ?>
-                <thead class="thead-dark">
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Nome</th>
                     <th scope="col">Email</th>
                     <th scope="col">Senha</th>
                     <th scope="col">CPF</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Cidade</th>
                     <th scope="col">CEP</th>
-                    <th scope="col">Rua</th>
-                    <th scope="col">Número</th>
-                    <th scope="col">Bairro</th>
-                    <th scope="col">Celular</th>
                     <th scope="col">Complemento</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col"></th>
                 </tr>
                 </thead>
                 <tbody>
                     <?php
                         if($result->num_rows > 0)
                         {
-                            while($rows_cads = mysqli_fetch_assoc($result)){
+                            while($rows_cads = mysqli_fetch_assoc($result))
+                            {
                                 echo "<tr>";
                                 echo "<td scope='row'>".$rows_cads['id']."</td>";
                                 echo "<td>".$rows_cads['nome']."</td>";
                                 echo "<td>".$rows_cads['email']."</td>";
                                 echo "<td>".$rows_cads['senha']."</td>";
                                 echo "<td>".$rows_cads['cpf']."</td>";
-                                echo "<td>".$rows_cads['cep']."</td>";
-                                echo "<td>".$rows_cads['rua']."</td>";
-                                echo "<td>".$rows_cads['numero']."</td>";
-                                echo "<td>".$rows_cads['bairro']."</td>";
-                                echo "<td>".$rows_cads['celular']."</td>";
-                                echo "<td>".$rows_cads['complemento']."</td>";
-                                echo "</tr>";
 
-                        }
+                                echo "<td>".$rows_cads['rua'].", ".
+                                $rows_cads['numero'].", ".
+                                $rows_cads['bairro']."</td>";
+
+                                echo "<td>".$rows_cads['cidade']."</td>";
+                                echo "<td>".$rows_cads['cep']."</td>";
+                                echo "<td>".$rows_cads['complemento']."</td>";
+                                echo "<td>".$rows_cads['celular']."</td>";
+                                echo "<td><a class='navbar-brand' href='Editar cadastro.php?id=".$rows_cads['id']."'><img src='../images/pencil.png' width='24' height='24' alt='editar'></a>
+                                <a id='link_apagar' class='navbar-brand' href='../functions/ApagarCadastro.php?id=".$rows_cads['id']."'><img src='../images/delete.png' width='24' height='24' alt='apagar'></a></td>";
+                            }
                         $pagina_anterior = $pagina - 1;
                         $pagina_posterior = $pagina + 1;
                         echo "</tbody>";
                         echo '</table>
-                                <ul class="nav justify-content-center">
+                            <nav class="nav justify-content-center">
+                                <ul class="nav nav-pills nav-fill-content">
                                     <li class="nav-item">';
                         if($pagina_anterior != 0){
                             echo 
@@ -78,18 +118,17 @@
                                 <img src="../images/icons8-back-48.png" alt="seta-atrás" width="30rem">
                             </a>';
                         }
-                        else
-                        { 
-                            echo 
-                            '<img src="../images/icons8-back-48.png" alt="seta-atrás" width="30rem">'; 
-                        } 
+
                         echo '</li>';
                         for($i = 1; $i < $num_pagina + 1; $i++)
                         { 
-                            echo 
-                            '<li><a class="nav-link active" href="Listagem.php?pagina='. $i .'">'. $i .'</a></li>';
+                            if($pagina==$i)
+                            echo '<li class="nav-item"><a class="nav-link active" href="Listagem.php?pagina='. $i .'">'. $i .'</a></li>';
+                            else
+                            echo '<li class="nav-item"><a class="nav-link" href="Listagem.php?pagina='. $i .'">'. $i .'</a></li>';
                         } 
-                        echo '<li>';
+
+                        echo '<li class="nav-item">';
                             if($pagina_posterior <= $num_pagina)
                             { 
                                 echo 
@@ -97,12 +136,8 @@
                                     <img src="../images/icons8-back-48.png" alt="seta-atrás" width="30rem" style="transform: rotateY(180deg);">
                                 </a>';
                             }
-                            else
-                            { echo 
-                                '<img src="../images/icons8-back-48.png" alt="seta-atrás" width="30rem" style="transform: rotateY(180deg);">';
-                            }
                         echo '</li>
-                    </ul>
+                        </ul>
                     </nav>';
                 }
             ?>
