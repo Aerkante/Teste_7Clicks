@@ -109,6 +109,7 @@
                         $pagina_posterior = $pagina + 1;
                         echo "</tbody>";
                         echo '</table>
+                            <div class="content-nav">
                             <nav class="nav justify-content-center">
                                 <ul class="nav nav-pills nav-fill-content">
                                     <li class="nav-item">';
@@ -138,6 +139,7 @@
                             }
                         echo '</li>
                         </ul>
+                        </div>
                     </nav>';
                 }
             ?>
