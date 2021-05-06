@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Archivo&display=swap');
 .modal-sm
 {
-    max-width: 70% !important;
-    height: 70%;
+    max-width: 90% !important;
     min-height: fit-content;
     margin: auto ;
     box-shadow: 0 2px 0.3em rgb(126, 126, 126);
     border-radius: 10px;
     padding: 4%;
 }
+
 .modal-d
 {
     max-width: 90% !important;
