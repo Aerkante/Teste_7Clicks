@@ -1,3 +1,7 @@
+<head>
+    <script type="text/javascript" src="../script/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+</head>
 <?php
 
     function verifica_cad_duplicatas($email)
@@ -38,21 +42,61 @@
             VALUES ('$email', '$senha', '$nome', '$cpf', '$cidade', '$cep', '$rua', '$numero', '$bairro', '$celular', '$complemento')";
             if (mysqli_query($conn, $sql_new_cad))
             {
-                echo"<script language='javascript' type='text/javascript'>
-                alert('Novo usuário cadastrado com sucesso');window.location
-                .href='../pages/Cadastro.php';</script>";
+                echo "
+                    <script type='text/javascript'>
+                
+                    $(document).ready(function(){
+
+                        Swal.fire(
+                            'Sucesso',
+                            'Novo usuário cadastrado...Redirecionando',
+                            'success'
+                          );
+                        });
+                    setTimeout( function() {
+                        window.location.href='../index.html';
+                        }, 2500 );
+                    </script>
+                    ";
             }
             else
             {
-                echo"<script language='javascript' type='text/javascript'>
-                alert('Houve um erro! Contate um administrador');window.location
-                .href='../pages/Cadastro.php';</script>";
+                echo "
+            <script type='text/javascript'>
+                
+                $(document).ready(function(){
+
+                    Swal.fire(
+                        'Opa...',
+                        'Houve um erro, tente novamente mais tarde',
+                        'error'
+                        );
+                    });
+                setTimeout( function() {
+                    window.history.back();
+                }, 3000 );
+            </script>
+            ";
             }
         }
         else
         {
-            echo"<script language='javascript' type='text/javascript'>
-                alert('Email duplicado! Por favor, insira outro');window.history.back();</script>";
+            echo "
+            <script type='text/javascript'>
+                
+                $(document).ready(function(){
+
+                    Swal.fire(
+                        'Email duplicado',
+                        'Selecione outro email...Redirecionando',
+                        'warning'
+                        );
+                    });
+                setTimeout( function() {
+                    window.history.back();
+                }, 3000 );
+            </script>
+            ";
         }
     }
     else

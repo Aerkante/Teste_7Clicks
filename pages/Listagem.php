@@ -5,10 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="../script/Confirmacao.js"></script>
+    <script type="text/javascript" src="../script/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="../style/style.css" rel="stylesheet">
-    <title>Cadastro</title>
+    <title>Listagem</title>
 
     <?php
     session_start();
@@ -23,25 +25,26 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="navbar-collapse">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarsExample02">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="listagem" href="Listagem.php">Listagem</a>
+          </li>
 
-                <li class="nav-item active">
-                    <a class="nav-link active" href="Listagem.php">Listagem</span></a>
-                </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="cadastro" href="Cadastro.php">Cadastro</a>
+          </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="Cadastro.php">Cadastro</a>
-                </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../functions/Logout.php">Sair</a>
+          </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="../functions/Logout.php">Sair</a>
-                </li>
-
-            </ul>
-        </div>
-    </nav>
+        </ul>
+      </div>
+    </div>
+</nav>
 
     <div class="table-responsive-sm">
         <table class="table">
@@ -103,28 +106,32 @@
                                 echo "<td>".$rows_cads['complemento']."</td>";
                                 echo "<td>".$rows_cads['celular']."</td>";
                                 echo "<td><a class='navbar-brand' href='Editar cadastro.php?id=".$rows_cads['id']."'><img src='../images/pencil.png' width='24' height='24' alt='editar'></a>
-                                <a id='link_apagar' class='navbar-brand' href='../functions/ApagarCadastro.php?id=".$rows_cads['id']."'><img src='../images/delete.png' width='24' height='24' alt='apagar'></a></td>";
+                                <a class='navbar-brand link_apagar' href='../functions/ApagarCadastro.php?id=".$rows_cads['id']."' value='".$rows_cads['id']."'><img src='../images/delete.png' width='24' height='24' alt='apagar'></a></td>";
                             }
                         $pagina_anterior = $pagina - 1;
                         $pagina_posterior = $pagina + 1;
+
                         echo "</tbody>";
                         echo '</table>
+                            </div>
                             <div class="content-nav">
-                            <nav class="nav justify-content-center">
-                                <ul class="nav nav-pills nav-fill-content">
-                                    <li class="nav-item">';
+                                <nav class="nav justify-content-center">
+                                    <ul class="nav nav-pills nav-fill-content">
+                                        <li class="nav-item">';
+
                         if($pagina_anterior != 0){
                             echo 
                             '<a class="nav-link" href="Listagem.php?pagina='.$pagina_anterior .'" aria-label="Previous">
                                 <img src="../images/icons8-back-48.png" alt="seta-atrás" width="30rem">
                             </a>';
                         }
-
                         echo '</li>';
+
                         for($i = 1; $i < $num_pagina + 1; $i++)
                         { 
                             if($pagina==$i)
                             echo '<li class="nav-item"><a class="nav-link active" href="Listagem.php?pagina='. $i .'">'. $i .'</a></li>';
+
                             else
                             echo '<li class="nav-item"><a class="nav-link" href="Listagem.php?pagina='. $i .'">'. $i .'</a></li>';
                         } 
@@ -132,17 +139,18 @@
                         echo '<li class="nav-item">';
                             if($pagina_posterior <= $num_pagina)
                             { 
-                                echo 
-                                '<a class="nav-link" href="Listagem.php?pagina='. $pagina_posterior .'" aria-label="Previous">
+                                echo '
+                                <a class="nav-link" href="Listagem.php?pagina='. $pagina_posterior .'" aria-label="Previous">
                                     <img src="../images/icons8-back-48.png" alt="seta-atrás" width="30rem" style="transform: rotateY(180deg);">
                                 </a>';
                             }
-                        echo '</li>
-                        </ul>
+                        echo '
+                                </li>
+                            </ul>
                         </div>
-                    </nav>';
-                }
+                        </nav>';
+                    }
             ?>
-    </div>
+        </div>
 </body>
 </html>

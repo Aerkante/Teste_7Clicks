@@ -17,7 +17,11 @@ submit_bt.addEventListener('click',function(e){
     || bairro.value == "" || celular.value == "")
     {
         e.preventDefault();
-        alert('Por favor, preencha todos os campos');
+        Swal.fire(
+            'Erro :(',
+            'Por favor, preencha todos os campos',
+            'error'
+          );
     }
     else
     {

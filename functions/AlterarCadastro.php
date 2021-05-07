@@ -1,3 +1,8 @@
+<head>
+    <script type="text/javascript" src="../script/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
+</head>
+
 <?php
     if(isset($_POST['bt_alterar_cad']))
         {
@@ -21,19 +26,59 @@
             WHERE id= '$id'";
             if (mysqli_query($conn, $sql_alterar_cad))
             {
-                echo"<script language='javascript' type='text/javascript'>
-                alert('Atualizado');window.location
-                .href='../pages/Listagem.php';</script>";
+                echo "
+                    <script type='text/javascript'>
+                
+                    $(document).ready(function(){
+
+                        Swal.fire(
+                            'Sucesso',
+                            'Atualizado com sucesso',
+                            'success'
+                          );
+                        });
+                    setTimeout( function() {
+                        window.location.href='../pages/Listagem.php';
+                        }, 2500 );
+                    </script>
+                    ";
             }
             else
             {
-                echo"<script language='javascript' type='text/javascript'>
-                alert('Houve um erro! Contate um administrador');window.history.back();</script>";
+                echo "
+                    <script type='text/javascript'>
+                
+                    $(document).ready(function(){
+
+                        Swal.fire(
+                            'Erro',
+                            'Não foi possível realizar a alteração',
+                            'erro'
+                          );
+                        });
+                    setTimeout( function() {
+                        window.history.back();
+                        }, 3000 );
+                    </script>
+                    ";
             }
         }
         else
         {
             echo "
-            <script language='javascript' type='text/javascript'>
-            alert('PARADO AÍ! Não sei como, mas você não deveria estar aqui. Dê meia volta');window.history.back();</script>";
+            <script type='text/javascript'>
+                
+                $(document).ready(function(){
+
+                    Swal.fire(
+                        'Opa...',
+                        'Você não deveria estar aqui...Redirecionando',
+                        'warning'
+                        );
+                    });
+                setTimeout( function() {
+                    window.history.back();
+                }, 3000 );
+            </script>
+            ";
         }

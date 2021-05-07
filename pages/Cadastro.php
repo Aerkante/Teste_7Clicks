@@ -5,35 +5,40 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="../script/validaCampos.js" async></script>
+    <script type="text/javascript" src="../script/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.7/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link href="../style/style.css" rel="stylesheet">
+
     <title>Cadastro</title>
 </head>
 
 <body>
     <?php
         session_start();
+        
         if(isset($_SESSION['email']))
         {
             echo '
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <div class="navbar-collapse">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <nav class="navbar navbar-expand navbar-dark bg-dark">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="listagem" href="Listagem.php">Listagem</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="Listagem.php">Listagem</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="cadastro" href="Cadastro.php">Cadastro</a>
+                            </li>
 
-                        <li class="nav-item active">
-                            <a class="nav-link active" href="Cadastro.php">Cadastro</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="../functions/Logout.php">Sair</a>
-                        </li>
-
-                    </ul>
+                            <li class="nav-item">
+                                <a class="nav-link" href="../functions/Logout.php">Sair</a>
+                            </li>
+                            
+                        </ul>
+                    </div>
                 </div>
             </nav>';
         }
